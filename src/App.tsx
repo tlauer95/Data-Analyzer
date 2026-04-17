@@ -27,7 +27,7 @@ import {
   ZAxis
 } from 'recharts';
 
-const COLORS = ['#141414', '#5A5A40', '#F27D26', '#8E9299', '#D1D1D1'];
+const COLORS = ['#F197AC', '#35BCED', '#FFDB00', '#0C151C', '#F27D26'];
 
 export default function App() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -147,19 +147,24 @@ export default function App() {
 
   if (candidates.length === 0) {
     return (
-      <div className="min-h-screen bg-[#E4E3E0] flex items-center justify-center p-6 font-sans">
+      <div className="min-h-screen bg-[#F5F5F0] flex items-center justify-center p-6 font-sans">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-md w-full"
         >
-          <Card className="border-2 border-[#141414] shadow-none bg-white">
+          <Card className="border-2 border-[#0C151C] shadow-[8px_8px_0px_0px_#35BCED] bg-white rounded-none">
             <CardHeader className="text-center pb-2">
-              <div className="mx-auto w-16 h-16 bg-[#141414] rounded-full flex items-center justify-center mb-4">
-                <FileText className="text-white w-8 h-8" />
+              <div className="mx-auto mb-6">
+                <img 
+                  src="https://ais-pre-5mvoqfhbisg6kkqp2zzeym-212887783175.us-west1.run.app/api/attachments/clxdp8s2e00001401k5m8z9f6/asset.png" 
+                  alt="Galileo Logo" 
+                  className="h-16 object-contain mx-auto"
+                  referrerPolicy="no-referrer"
+                />
               </div>
-              <CardTitle className="text-2xl font-serif italic">Onboarding Analyzer</CardTitle>
-              <CardDescription>Upload your report to begin analysis</CardDescription>
+              <CardTitle className="text-2xl font-serif italic text-[#0C151C]">Onboarding Analyzer</CardTitle>
+              <CardDescription className="text-[#0C151C]/60">Upload your core report to begin analysis</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -202,38 +207,43 @@ export default function App() {
   const completionRate = stats ? Math.round((totalComplete / (activeCandidatesCount || 1)) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-[#E4E3E0] text-[#141414] font-sans p-4 md:p-8">
+    <div className="min-h-screen bg-[#F5F5F0] text-[#0C151C] font-sans p-4 md:p-8">
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#141414] pb-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Badge variant="outline" className="border-[#141414] text-[#141414] rounded-none px-2 py-0">LIVE REPORT</Badge>
-              <span className="text-xs font-mono opacity-60 uppercase tracking-widest">System Status: Active</span>
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#0C151C] pb-6">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <img 
+              src="https://ais-pre-5mvoqfhbisg6kkqp2zzeym-212887783175.us-west1.run.app/api/attachments/clxdp8s2e00001401k5m8z9f6/asset.png" 
+              alt="Galileo Logo" 
+              className="h-12 object-contain"
+              referrerPolicy="no-referrer"
+            />
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Badge variant="outline" className="border-[#0C151C] text-[#0C151C] rounded-none px-2 py-0 uppercase text-[10px] tracking-widest font-mono">LIVE REPORT</Badge>
+                <span className="text-xs font-mono opacity-60 uppercase tracking-widest">System Status: Active</span>
+              </div>
+              <h1 className="text-5xl font-serif italic tracking-tight text-[#0C151C]">Onboarding Dashboard</h1>
+              <div className="flex flex-wrap items-center gap-2 mt-4">
+                {['All', 'Summer Staff', 'HQ', 'Camp Director'].map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat as any)}
+                    className={`px-3 py-1 text-[10px] font-mono uppercase tracking-widest border transition-all ${
+                      selectedCategory === cat 
+                        ? 'bg-[#0C151C] text-white border-[#0C151C] shadow-[4px_4px_0px_0px_#35BCED]' 
+                        : 'bg-white border-[#0C151C]/20 hover:border-[#0C151C] opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
-            <h1 className="text-5xl font-serif italic tracking-tight">Onboarding Dashboard</h1>
-            <div className="flex flex-wrap items-center gap-2 mt-4">
-              {['All', 'Summer Staff', 'HQ', 'Camp Director'].map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat as any)}
-                  className={`px-3 py-1 text-[10px] font-mono uppercase tracking-widest border transition-all ${
-                    selectedCategory === cat 
-                      ? 'bg-[#141414] text-white border-[#141414]' 
-                      : 'border-[#141414]/20 hover:border-[#141414] opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-            <p className="text-[#8E9299] mt-4 font-mono text-sm uppercase tracking-wider">
-              Analyzing {filteredCandidates.length} {selectedCategory !== 'All' ? selectedCategory : ''} candidates
-            </p>
           </div>
           <button 
             onClick={() => setCandidates([])}
-            className="px-4 py-2 border border-[#141414] hover:bg-[#141414] hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
+            className="px-4 py-2 border border-[#0C151C] hover:bg-[#0C151C] hover:text-white transition-colors font-mono text-xs uppercase tracking-widest"
           >
             Upload New File
           </button>
@@ -242,18 +252,23 @@ export default function App() {
         {/* Top Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: 'Total Candidates', value: stats?.totalUniqueCandidates, icon: Users },
-            { label: 'Fully Complete', value: totalComplete, icon: CheckCircle },
-            { label: 'Avg Completion', value: `${completionRate}%`, icon: BarChart3 },
-            { label: 'Resigned/Rescinded Staff', value: stats?.resignedRescindedCount, icon: MapPin },
+            { label: 'Total Candidates', value: stats?.totalUniqueCandidates, icon: Users, color: '#35BCED' },
+            { label: 'Fully Complete', value: totalComplete, icon: CheckCircle, color: '#FFDB00' },
+            { label: 'Avg Completion', value: `${completionRate}%`, icon: BarChart3, color: '#F197AC' },
+            { label: 'Resigned/Rescinded', value: stats?.resignedRescindedCount, icon: MapPin, color: '#F197AC' },
           ].map((stat, i) => (
-            <Card key={i} className="border border-[#141414] shadow-none rounded-none bg-white">
-              <CardContent className="p-6 flex items-center justify-between">
+            <Card key={i} className="border border-[#0C151C] shadow-none rounded-none bg-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-16 h-16 opacity-5 -mr-4 -mt-4">
+                <stat.icon size={64} style={{ color: stat.color }} />
+              </div>
+              <CardContent className="p-6 flex items-center justify-between relative z-10">
                 <div>
-                  <p className="text-xs font-mono uppercase text-[#8E9299] mb-1">{stat.label}</p>
-                  <p className="text-3xl font-serif italic">{stat.value}</p>
+                  <p className="text-xs font-mono uppercase text-[#0C151C]/60 mb-1">{stat.label}</p>
+                  <p className="text-3xl font-serif italic font-bold text-[#0C151C]">{stat.value}</p>
                 </div>
-                <stat.icon className="w-8 h-8 opacity-20" />
+                <div className="p-2 border border-[#0C151C]/10 bg-[#F5F5F0]">
+                  <stat.icon size={20} style={{ color: stat.color }} />
+                </div>
               </CardContent>
             </Card>
           ))}
@@ -261,12 +276,12 @@ export default function App() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="bg-transparent border-b border-[#141414] rounded-none h-auto p-0 gap-8">
+          <TabsList className="bg-transparent border-b border-[#0C151C] rounded-none h-auto p-0 gap-8">
             {['overview', 'time', 'regions'].map((tab) => (
               <TabsTrigger 
                 key={tab}
                 value={tab}
-                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#141414] data-[state=active]:bg-transparent px-0 py-2 text-xs font-mono uppercase tracking-widest"
+                className="rounded-none border-b-2 border-transparent data-[state=active]:border-[#35BCED] data-[state=active]:bg-transparent px-0 py-2 text-xs font-mono uppercase tracking-widest text-[#0C151C]/40 data-[state=active]:text-[#0C151C]"
               >
                 {tab}
               </TabsTrigger>
@@ -275,12 +290,12 @@ export default function App() {
 
           <TabsContent value="overview" className="space-y-6">
             <div className={`grid grid-cols-1 ${selectedCategory === 'HQ' ? '' : 'lg:grid-cols-2'} gap-6`}>
-              <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+              <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
                 <CardHeader>
-                  <CardTitle className="font-serif italic text-xl">
+                  <CardTitle className="font-serif italic text-xl text-[#0C151C]">
                     {selectedCategory === 'Summer Staff' || selectedCategory === 'HQ' ? 'Job Title Distribution' : 'Candidate Distribution'}
                   </CardTitle>
-                  <CardDescription className="font-mono text-xs uppercase">
+                  <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">
                     {selectedCategory === 'Summer Staff' || selectedCategory === 'HQ' ? 'By Normalized Job Title' : 'By Requisition Category'}
                   </CardDescription>
                 </CardHeader>
@@ -301,22 +316,22 @@ export default function App() {
                         ))}
                       </Pie>
                       <Tooltip 
-                        contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                        contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                         itemStyle={{ color: '#fff' }}
                       />
-                      <Legend />
+                      <Legend verticalAlign="bottom" wrapperStyle={{ fontFamily: 'monospace', fontSize: '10px', textTransform: 'uppercase' }} />
                     </PieChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
 
               {selectedCategory !== 'HQ' && (
-                <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+                <Card className="border border-[#0C151C] shadow-none rounded-none bg-white underline-offset-4">
                   <CardHeader>
-                    <CardTitle className="font-serif italic text-xl">
+                    <CardTitle className="font-serif italic text-xl text-[#0C151C]">
                       {selectedCategory === 'Summer Staff' ? 'Tenure Breakdown' : 'Category Breakdown'}
                     </CardTitle>
-                    <CardDescription className="font-mono text-xs uppercase">
+                    <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">
                       {selectedCategory === 'Summer Staff' ? 'First Year vs Alumni' : 'Counts and Completion Rates'}
                     </CardDescription>
                   </CardHeader>
@@ -325,12 +340,16 @@ export default function App() {
                       {(selectedCategory === 'Summer Staff' ? tenureData : categoryData).map((item, i) => (
                         <div key={i} className="space-y-2">
                           <div className="flex justify-between text-sm font-mono uppercase">
-                            <span>{item.name}</span>
+                            <span className="font-bold">{item.name}</span>
                             <span className="opacity-60">{item.complete} / {item.value} Complete</span>
                           </div>
                           <Progress 
                             value={(item.complete / item.value) * 100} 
-                            className="h-2 rounded-none bg-[#E4E3E0]"
+                            className="h-2 rounded-none bg-[#F5F5F0]"
+                            style={{ 
+                              // @ts-ignore
+                              "--progress-fill": COLORS[i % COLORS.length] 
+                            }}
                           />
                         </div>
                       ))}
@@ -339,10 +358,10 @@ export default function App() {
                 </Card>
               )}
 
-              <Card className="border border-[#141414] shadow-none rounded-none bg-white lg:col-span-2">
+              <Card className="border border-[#0C151C] shadow-none rounded-none bg-white lg:col-span-2">
                 <CardHeader>
-                  <CardTitle className="font-serif italic text-xl">Task Type Breakdown</CardTitle>
-                  <CardDescription className="font-mono text-xs uppercase">New Hire vs Internal Tasks</CardDescription>
+                  <CardTitle className="font-serif italic text-xl text-[#0C151C]">Task Type Breakdown</CardTitle>
+                  <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">New Hire vs Internal Tasks</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -350,22 +369,26 @@ export default function App() {
                       <div key={i} className="space-y-4">
                         <div className="flex items-end justify-between">
                           <div>
-                            <p className="text-xs font-mono uppercase text-[#8E9299] mb-1">Type</p>
-                            <p className="text-2xl font-serif italic">{type.name}</p>
+                            <p className="text-[10px] font-mono uppercase text-[#0C151C]/60 mb-1">Type</p>
+                            <p className="text-2xl font-serif italic text-[#0C151C]">{type.name}</p>
                           </div>
                           <div className="text-right">
-                            <p className="text-xs font-mono uppercase text-[#8E9299] mb-1">Completion</p>
-                            <p className="text-xl font-serif italic">{Math.round((type.complete / type.value) * 100)}%</p>
+                            <p className="text-[10px] font-mono uppercase text-[#0C151C]/60 mb-1">Completion</p>
+                            <p className="text-xl font-serif italic text-[#0C151C]">{Math.round((type.complete / type.value) * 100)}%</p>
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <div className="flex justify-between text-[10px] font-mono uppercase opacity-60">
+                          <div className="flex justify-between text-[10px] font-mono uppercase opacity-40">
                             <span>{type.complete} Completed</span>
                             <span>{type.value} Total Tasks</span>
                           </div>
                           <Progress 
                             value={(type.complete / type.value) * 100} 
-                            className="h-1 rounded-none bg-[#E4E3E0]"
+                            className="h-1 rounded-none bg-[#F5F5F0]"
+                            style={{ 
+                              // @ts-ignore
+                              "--progress-fill": COLORS[i % COLORS.length] 
+                            }}
                           />
                         </div>
                       </div>
@@ -378,97 +401,97 @@ export default function App() {
 
           <TabsContent value="time" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+              <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
                 <CardHeader>
-                  <CardTitle className="font-serif italic text-xl">New Hire Task Velocity</CardTitle>
-                  <CardDescription className="font-mono text-xs uppercase">Avg Days to Complete (New Hire Tasks)</CardDescription>
+                  <CardTitle className="font-serif italic text-xl text-[#0C151C]">New Hire Task Velocity</CardTitle>
+                  <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Avg Days to Complete (New Hire Tasks)</CardDescription>
                 </CardHeader>
                 <CardContent className="h-[350px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={taskTimeData.newHire}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#E4E3E0" vertical={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F5F5F0" vertical={false} />
                       <XAxis 
                         dataKey="name" 
-                        tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                        tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                         angle={-45}
                         textAnchor="end"
                         height={80}
                       />
                       <YAxis 
-                        tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                        tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                       />
                       <Tooltip 
-                        cursor={{ fill: '#f5f5f5' }}
-                        contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                        cursor={{ fill: '#F5F5F0' }}
+                        contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                         formatter={(value: number) => [`${value} Days`, 'Avg. Time']}
                       />
-                      <Bar dataKey="days" fill="#F27D26" radius={0} />
+                      <Bar dataKey="days" fill="#35BCED" radius={0} />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
 
-              <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+              <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
                 <CardHeader>
-                  <CardTitle className="font-serif italic text-xl">Internal Task Velocity</CardTitle>
-                  <CardDescription className="font-mono text-xs uppercase">Avg Days to Complete (Internal Tasks)</CardDescription>
+                  <CardTitle className="font-serif italic text-xl text-[#0C151C]">Internal Task Velocity</CardTitle>
+                  <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Avg Days to Complete (Internal Tasks)</CardDescription>
                 </CardHeader>
                 <CardContent className="h-[350px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={taskTimeData.internal}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#E4E3E0" vertical={false} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="#F5F5F0" vertical={false} />
                       <XAxis 
                         dataKey="name" 
-                        tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                        tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                         angle={-45}
                         textAnchor="end"
                         height={80}
                       />
                       <YAxis 
-                        tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                        tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                       />
                       <Tooltip 
-                        cursor={{ fill: '#f5f5f5' }}
-                        contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                        cursor={{ fill: '#F5F5F0' }}
+                        contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                         formatter={(value: number) => [`${value} Days`, 'Avg. Time']}
                       />
-                      <Bar dataKey="days" fill="#5A5A40" radius={0} />
+                      <Bar dataKey="days" fill="#FFDB00" radius={0} />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
             </div>
 
-            <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+            <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
               <CardHeader>
-                <CardTitle className="font-serif italic text-xl">Launch Timeline & Performance</CardTitle>
-                <CardDescription className="font-mono text-xs uppercase">Launch Date vs. Avg Completion Time</CardDescription>
+                <CardTitle className="font-serif italic text-xl text-[#0C151C]">Launch Timeline & Performance</CardTitle>
+                <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Launch Date vs. Avg Completion Time</CardDescription>
               </CardHeader>
               <CardContent className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E4E3E0" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#F5F5F0" vertical={false} />
                     <XAxis 
                       dataKey="date" 
                       name="Launch Date"
-                      tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                      tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                     />
                     <YAxis 
                       dataKey="avgCompletionDays" 
                       name="Avg Days"
-                      tick={{ fontSize: 9, fontFamily: 'monospace' }} 
-                      label={{ value: 'Avg Days to Complete', angle: -90, position: 'insideLeft', style: { fontSize: 9, fontFamily: 'monospace' } }} 
+                      tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }} 
+                      label={{ value: 'Avg Days to Complete', angle: -90, position: 'insideLeft', style: { fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' } }} 
                     />
                     <ZAxis dataKey="candidateCount" range={[50, 400]} name="Candidates" />
                     <Tooltip 
-                      cursor={{ strokeDasharray: '3 3' }}
-                      contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                      cursor={{ strokeDasharray: '3 3', stroke: '#0C151C' }}
+                      contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                     />
                     <Legend />
                     <Scatter 
                       name="Launch Performance" 
                       data={stats?.launchTimeline} 
-                      fill="#F27D26"
+                      fill="#F197AC"
                       line={false}
                     />
                   </ScatterChart>
@@ -476,27 +499,27 @@ export default function App() {
               </CardContent>
             </Card>
 
-            <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+            <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
               <CardHeader>
-                <CardTitle className="font-serif italic text-xl">Average Task Sequence</CardTitle>
-                <CardDescription className="font-mono text-xs uppercase">Order of completion (Avg days from launch)</CardDescription>
+                <CardTitle className="font-serif italic text-xl text-[#0C151C]">Average Task Sequence</CardTitle>
+                <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Order of completion (Avg days from launch)</CardDescription>
               </CardHeader>
               <CardContent className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={stats?.taskSequence} layout="vertical" margin={{ left: 40 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E4E3E0" />
-                    <XAxis type="number" tick={{ fontSize: 9, fontFamily: 'monospace' }} label={{ value: 'Days from Launch', position: 'insideBottom', offset: -5, style: { fontSize: 9, fontFamily: 'monospace' } }} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#F5F5F0" />
+                    <XAxis type="number" tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }} label={{ value: 'Days from Launch', position: 'insideBottom', offset: -5, style: { fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' } }} />
                     <YAxis 
                       dataKey="taskName" 
                       type="category" 
                       width={180} 
-                      tick={{ fontSize: 9, fontFamily: 'monospace' }}
+                      tick={{ fontSize: 9, fontFamily: 'monospace', fill: '#0C151C' }}
                     />
                     <Tooltip 
-                      cursor={{ fill: '#f5f5f5' }}
-                      contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                      cursor={{ fill: '#F5F5F0' }}
+                      contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                     />
-                    <Bar dataKey="avgDaysFromLaunch" name="Avg Days from Launch" fill="#141414" radius={0} />
+                    <Bar dataKey="avgDaysFromLaunch" name="Avg Days from Launch" fill="#35BCED" radius={0} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -504,31 +527,31 @@ export default function App() {
           </TabsContent>
 
           <TabsContent value="regions" className="space-y-6">
-            <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+            <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
               <CardHeader>
-                <CardTitle className="font-serif italic text-xl">Regional Distribution</CardTitle>
-                <CardDescription className="font-mono text-xs uppercase">Complete breakdown of all active regions</CardDescription>
+                <CardTitle className="font-serif italic text-xl text-[#0C151C]">Regional Distribution</CardTitle>
+                <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Complete breakdown of all active regions</CardDescription>
               </CardHeader>
               <CardContent>
                 <ScrollArea className="h-[400px] pr-4">
-                  <div className="divide-y divide-[#E4E3E0]">
+                  <div className="divide-y divide-[#0C151C]/10">
                     {(Object.entries(stats?.regionStats || {}) as [string, { count: number; completeCount: number }][])
                       .sort((a, b) => b[1].count - a[1].count)
                       .map(([name, data], i) => (
-                        <div key={i} className="py-4 flex items-center justify-between group hover:bg-[#f5f5f5] transition-colors px-2">
+                        <div key={i} className="py-4 flex items-center justify-between group hover:bg-[#F5F5F0] transition-colors px-2">
                           <div className="flex items-center gap-4">
                             <span className="text-xs font-mono opacity-40">{(i + 1).toString().padStart(2, '0')}</span>
                             <div>
-                              <p className="font-medium text-sm uppercase tracking-tight">{name || 'Unknown Region'}</p>
-                              <p className="text-xs font-mono text-[#8E9299]">{data.count} Candidates</p>
+                              <p className="font-medium text-sm uppercase tracking-tight text-[#0C151C]">{name || 'Unknown Region'}</p>
+                              <p className="text-xs font-mono text-[#0C151C]/60">{data.count} Candidates</p>
                             </div>
                           </div>
                           <div className="flex items-center gap-6">
                             <div className="text-right">
-                              <p className="text-sm font-serif italic">{Math.round((data.completeCount / data.count) * 100)}%</p>
+                              <p className="text-sm font-serif italic text-[#0C151C]">{Math.round((data.completeCount / data.count) * 100)}%</p>
                               <p className="text-[10px] font-mono uppercase opacity-40">Complete</p>
                             </div>
-                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-[#0C151C]" />
                           </div>
                         </div>
                       ))}
@@ -537,28 +560,28 @@ export default function App() {
               </CardContent>
             </Card>
 
-            <Card className="border border-[#141414] shadow-none rounded-none bg-white">
+            <Card className="border border-[#0C151C] shadow-none rounded-none bg-white">
               <CardHeader>
-                <CardTitle className="font-serif italic text-xl">Completion by Region</CardTitle>
-                <CardDescription className="font-mono text-xs uppercase">Top 10 Regions by Volume</CardDescription>
+                <CardTitle className="font-serif italic text-xl text-[#0C151C]">Completion by Region</CardTitle>
+                <CardDescription className="font-mono text-xs uppercase text-[#0C151C]/60">Top 10 Regions by Volume</CardDescription>
               </CardHeader>
               <CardContent className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={regionData} layout="vertical" margin={{ left: 40 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E4E3E0" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#F5F5F0" />
                     <XAxis type="number" hide />
                     <YAxis 
                       dataKey="name" 
                       type="category" 
                       width={150} 
-                      tick={{ fontSize: 10, fontFamily: 'monospace' }}
+                      tick={{ fontSize: 10, fontFamily: 'monospace', fill: '#0C151C' }}
                     />
                     <Tooltip 
-                      cursor={{ fill: '#f5f5f5' }}
-                      contentStyle={{ backgroundColor: '#141414', color: '#fff', border: 'none', borderRadius: '0' }}
+                      cursor={{ fill: '#F5F5F0' }}
+                      contentStyle={{ backgroundColor: '#0C151C', color: '#fff', border: 'none', borderRadius: '0', fontFamily: 'monospace' }}
                     />
-                    <Bar dataKey="value" name="Total" fill="#8E9299" radius={0} />
-                    <Bar dataKey="complete" name="Complete" fill="#141414" radius={0} />
+                    <Bar dataKey="value" name="Total" fill="#F197AC" opacity={0.1} radius={0} />
+                    <Bar dataKey="complete" name="Complete" fill="#35BCED" radius={0} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -567,14 +590,14 @@ export default function App() {
         </Tabs>
 
         {/* Footer */}
-        <footer className="pt-12 pb-6 border-t border-[#141414] flex flex-col md:flex-row justify-between items-center gap-4">
+        <footer className="pt-12 pb-6 border-t border-[#0C151C] flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[10px] font-mono uppercase tracking-widest opacity-40">
-            © 2026 Galileo Learning Onboarding Systems
+            © 2026 Galileo Learning | Innovation & Discovery
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Documentation</a>
-            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Support</a>
-            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">Privacy</a>
+            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity text-[#0C151C]">Documentation</a>
+            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity text-[#0C151C]">Support</a>
+            <a href="#" className="text-[10px] font-mono uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity text-[#0C151C]">Systems API</a>
           </div>
         </footer>
       </div>

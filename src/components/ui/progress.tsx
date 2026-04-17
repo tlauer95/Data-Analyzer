@@ -38,12 +38,14 @@ function ProgressTrack({ className, ...props }: ProgressPrimitive.Track.Props) {
 
 function ProgressIndicator({
   className,
+  style,
   ...props
 }: ProgressPrimitive.Indicator.Props) {
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
       className={cn("h-full bg-primary transition-all", className)}
+      style={{ backgroundColor: "var(--progress-fill, var(--color-primary))", ...style }}
       {...props}
     />
   )
