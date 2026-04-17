@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Badge } from './components/ui/badge';
 import { ScrollArea } from './components/ui/scroll-area';
 import { Progress } from './components/ui/progress';
+import { cn } from './lib/utils';
 import {
   BarChart,
   Bar,
@@ -28,6 +29,17 @@ import {
 } from 'recharts';
 
 const COLORS = ['#F197AC', '#35BCED', '#FFDB00', '#0C151C', '#F27D26'];
+
+const Logo = ({ className }: { className?: string }) => {
+  return (
+    <img 
+      src="https://galileo-camps.com/wp-content/uploads/2024/08/galileo-camps-logo.svg"
+      alt="Camp Galileo Logo" 
+      className={className}
+      referrerPolicy="no-referrer"
+    />
+  );
+};
 
 export default function App() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -155,13 +167,8 @@ export default function App() {
         >
           <Card className="border-2 border-[#0C151C] shadow-[8px_8px_0px_0px_#35BCED] bg-white rounded-none">
             <CardHeader className="text-center pb-2">
-              <div className="mx-auto mb-6">
-                <img 
-                  src="https://ais-pre-5mvoqfhbisg6kkqp2zzeym-212887783175.us-west1.run.app/api/attachments/clxdp8s2e00001401k5m8z9f6/asset.png" 
-                  alt="Galileo Logo" 
-                  className="h-16 object-contain mx-auto"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="mx-auto mb-6 flex justify-center">
+                <Logo className="h-24 object-contain" />
               </div>
               <CardTitle className="text-2xl font-serif italic text-[#0C151C]">Onboarding Analyzer</CardTitle>
               <CardDescription className="text-[#0C151C]/60">Upload your core report to begin analysis</CardDescription>
@@ -212,12 +219,7 @@ export default function App() {
         {/* Header */}
         <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#0C151C] pb-6">
           <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-            <img 
-              src="https://ais-pre-5mvoqfhbisg6kkqp2zzeym-212887783175.us-west1.run.app/api/attachments/clxdp8s2e00001401k5m8z9f6/asset.png" 
-              alt="Galileo Logo" 
-              className="h-12 object-contain"
-              referrerPolicy="no-referrer"
-            />
+            <Logo className="h-12" />
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Badge variant="outline" className="border-[#0C151C] text-[#0C151C] rounded-none px-2 py-0 uppercase text-[10px] tracking-widest font-mono">LIVE REPORT</Badge>
