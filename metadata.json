@@ -1,0 +1,5 @@
+{
+  "name": "Onboarding Report Analyzer",
+  "description": "Analyzes employee onboarding reports, categorizing candidates by requisition title, tracking task completion, and analyzing onboarding timelines.",
+  "requestFramePermissions": []
+}
